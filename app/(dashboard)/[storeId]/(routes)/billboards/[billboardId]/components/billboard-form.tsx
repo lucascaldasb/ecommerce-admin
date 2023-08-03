@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { AlertModal } from "@/components/modals/alert-modal"
-import { useOrigin } from "@/hooks/use-origin"
 import ImageUpload from "@/components/ui/image-upload"
 
 const formSchema = z.object({
@@ -44,7 +43,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
-  const origin = useOrigin()
 
   const title = initialData ? 'Edit billboard' : 'Create billboard'
   const description = initialData ? 'Edit a billboard' : 'Add a new billboard'
@@ -82,7 +80,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
       setLoading(true)
       await axios.delete(`/api/${params.storeId}/${params.billboardId}`)
       router.refresh()
-      router.push('/')
+      router.push(`/${params.storeId}/billboards`)
       toast.success('Billboard deleted.')
     } catch (error) {
       toast.error('Make sure you removed all categories using this billboard.')
@@ -157,7 +155,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
           </Button>
         </form>
       </Form>
-      <Separator />
     </>
   )
 }
