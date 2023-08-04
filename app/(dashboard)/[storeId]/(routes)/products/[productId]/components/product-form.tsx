@@ -71,6 +71,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const params = useParams()
   const router = useRouter()
   const [open, setOpen] = useState(false)
+  const [currColor, setCurrColor] = useState('')
   const [loading, setLoading] = useState(false)
 
   const title = initialData ? 'Edit product' : 'Create product'
@@ -121,7 +122,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       router.push(`/${params.storeId}/products`)
       toast.success('Product deleted.')
     } catch (error) {
-      toast.error('Make sure you removed all categories using this products.')
+      toast.error('Something went wrong.')
     } finally {
       setLoading(false)
       setOpen(false)
@@ -270,7 +271,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Colors</FormLabel>
-                  <div className="flex items-center gap-x-4">
                   <Select
                     disabled={loading} 
                     onValueChange={field.onChange} 
@@ -287,17 +287,12 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     </FormControl>
                     <SelectContent>
                       {colors.map((color) => (
-                        <SelectItem key={color.id} value={color.name}>
+                        <SelectItem key={color.id} value={color.id}>
                             {color.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                    <div
-                      className="border p-4 rounded-full"
-                      style={{ backgroundColor: field.value }}
-                    />
-                  </div>
                   <FormMessage />
                 </FormItem>
               )}
